@@ -11,9 +11,6 @@ import { AuthenticationService, AlertService } from '../_service';
   styleUrls: ['./login.component.scss']
 })
 
-
-
-@Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;

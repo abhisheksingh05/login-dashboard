@@ -9,7 +9,6 @@ let users = JSON.parse(localStorage.getItem('users')) || [];
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        debugger;
         const { url, method, headers, body } = request;
 
         // wrap in delayed observable to simulate server api call
@@ -20,7 +19,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(dematerialize());
 
         function handleRoute() {
-            debugger;
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
@@ -52,7 +50,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function register() {
-            debugger;
             const user = body
 
             if (users.find(x => x.username === user.username)) {

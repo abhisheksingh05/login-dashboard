@@ -23,24 +23,20 @@ export class AlertService {
     }
 
     getAlert(): Observable<any> {
-        debugger;
         return this.subject.asObservable();
     }
 
     success(message: string, keepAfterRouteChange = false) {
-        debugger;
         this.keepAfterRouteChange = keepAfterRouteChange;
         this.subject.next({ type: 'success', text: message });
     }
 
     error(message: string, keepAfterRouteChange = false) {
-        debugger
         this.keepAfterRouteChange = keepAfterRouteChange;
         this.subject.next({ type: 'error', text: message });
     }
 
     clear() {
-        debugger;
         // clear by calling subject.next() without parameters
         this.subject.next();
 

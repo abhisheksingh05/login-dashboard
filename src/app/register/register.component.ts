@@ -1,9 +1,16 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '../_service';
+
+function validateMobile(c:AbstractControl):{[key:string]: boolean} | null {
+    if(c.value!=null && (isNaN(c.value) || c.value.length != 10)){
+        return {'range': true}
+    }
+    return null;
+}
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
@@ -29,12 +36,25 @@ export class RegisterComponent implements OnInit {
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            mobileNo: [null, [validateMobile]],
+            notification: ['email', [Validators.required]]
         });
     }
 
     // convenience getter for easy access to form fields
     get f() { return this.registerForm.controls; }
+
+    setNotification(notifyVia){
+        let phoneControl = this.registerForm.get('mobileNo');
+        if(notifyVia == 'mobile'){
+            phoneControl.setValidators([Validators.required, validateMobile])
+        } else {
+            phoneControl.clearValidators()
+        }
+        phoneControl.updateValueAndValidity()
+    }
+
 
     onSubmit() {
         this.submitted = true;

@@ -12,7 +12,6 @@ export class UserService {
     }
 
     register(user: User) {
-        debugger;
         return this.http.post(`/users/register`, user);
     }
 
